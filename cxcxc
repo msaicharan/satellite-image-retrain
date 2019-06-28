@@ -1,0 +1,37 @@
+X_train = []
+y_train = []
+X_test = []
+y_test = []
+test_data = []
+classes = ['airplane', 'baseball_field', 'basketball_court', 'beach', 'bridge', 'cemetery', 'chaparral', 'christmas_tree_farm', 'closed_road', 'coastal_mansion', 'crosswalk', 'dense_residential', 'ferry_terminal', 'football_field', 'forest', 'freeway', 'golf_course', 'harbor', 'intersection', 'mobile_home_park', 'nursing_home', 'oil_gas_field', 'oil_well', 'overpass', 'parking_lot', 'parking_space', 'railway', 'river', 'runway', 'runway_marking', 'shipping_yard', 'solar_panel', 'sparse_residential', 'storage_tank', 'swimming_pool', 'tennis_court', 'transformer_station', 'wastewater_treatment_plant']
+
+def create_train_test_data():
+    for categories in classes:
+        path = os.path.join(data, categories)
+        i = 0
+        for img in os.listdir(path):
+            if(i<=200):
+                try:
+                    img_array = cv2.imread(os.path.join(path,img))
+                    X_train.append(img_array)
+                    y_train.append(categories)
+                except Exception as e:
+                    print(e)
+                
+            elif(i>200 and i<=250):
+                 try:
+                    img_array = cv2.imread(os.path.join(path,img))
+                    X_test.append(img_array)
+                    y_test.append(categories)
+                 except Exception as e:
+                    print(e)
+                 
+            else: 
+                pass
+            i+= 1
+            
+ create_train_test_data()
+print(len(X_train))
+print(len(y_train))
+print(len(X_test))
+print(len(y_test))
