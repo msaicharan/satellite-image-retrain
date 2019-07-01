@@ -112,4 +112,56 @@ print('Test accuracy:', score[1])
 
 
 
+batch_size = 400
+num_classes = 38
+epochs = 50
+
+model = Sequential()
+
+#Layer 1
+model.add(Conv2D(16, kernel_size=(3, 3),
+                 activation='relu',
+                 input_shape=(256,256,1)))
+
+model.add(MaxPooling2D(pool_size=(2, 2)))
+model.add(BatchNormalization())
+
+#Layer 2
+model.add(Conv2D(32, kernel_size=(3, 3),
+                 activation='relu',
+                 input_shape=(256,256,1)))
+
+model.add(MaxPooling2D(pool_size=(2, 2)))
+model.add(BatchNormalization())
+
+#Layer 3
+model.add(Conv2D(64, kernel_size=(3, 3),
+                 activation='relu',
+                 input_shape=(256,256,1)))
+
+model.add(MaxPooling2D(pool_size=(2, 2)))
+model.add(BatchNormalization())
+
+
+model.add(Dropout(0.10))
+model.add(Flatten())
+model.add(Dense(num_classes, activation='softmax'))
+model.add(BatchNormalization())
+
+
+# model.summary()
+
+model.compile(loss=keras.losses.categorical_crossentropy,
+            optimizer=keras.optimizers.Adadelta(),
+              metrics=['accuracy'])
+
+model.fit(x_train, np.array(y_train),
+          batch_size=batch_size,
+          epochs=epochs,
+          verbose=1,
+          validation_data= (x_test, np.array(y_test)))
+
+
+
+
 https://github.com/tensorflow/tensorflow/issues/9829
